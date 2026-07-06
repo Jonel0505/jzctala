@@ -17,8 +17,8 @@ export const getSiteContent = createServerFn({ method: "GET" }).handler(async ()
     sb.from("portal_modules").select("*").order("sort_order"),
     sb.from("announcements").select("*").eq("published", true).order("created_at", { ascending: false }).limit(5),
   ]);
-  const settingsMap: Record<string, Record<string, unknown>> = {};
-  for (const s of settings ?? []) settingsMap[s.key] = s.value as Record<string, unknown>;
+  const settingsMap: Record<string, any> = {};
+  for (const s of settings ?? []) settingsMap[s.key] = s.value as any;
   return {
     settings: settingsMap,
     modules: modules ?? [],

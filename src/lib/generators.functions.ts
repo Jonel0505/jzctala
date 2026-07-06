@@ -46,7 +46,7 @@ Return JSON with keys: title (string), objectives (string[]), materials (string[
         title: plan.title || `${data.subject} — ${data.topic}`,
         subject: data.subject,
         grade: data.grade,
-        content: plan as unknown as Record<string, unknown>,
+        content: plan as any,
       })
       .select()
       .single();
@@ -111,7 +111,7 @@ Return JSON: { title: string, rows: [{ topic, no_of_items, remembering, understa
         title: tos.title || `TOS — ${data.subject} ${data.grade}`,
         subject: data.subject,
         grade: data.grade,
-        table_data: tos as unknown as Record<string, unknown>,
+        table_data: tos as any,
       })
       .select()
       .single();
@@ -167,7 +167,7 @@ Return JSON: { title: string, items: [{ question, ${data.item_type === "multiple
         title: asmt.title || `Assessment — ${data.topic}`,
         subject: data.subject,
         grade: data.grade,
-        items: asmt.items as unknown as Record<string, unknown>[],
+        items: asmt.items as any,
       })
       .select()
       .single();
