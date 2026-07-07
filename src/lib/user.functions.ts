@@ -16,6 +16,51 @@ export const getMyProfile = createServerFn({ method: "GET" })
     };
   });
 
+export const setMyAvatar = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: unknown) => z.object({ avatar_url: z.string().max(500).nullable() }).parse(d))
+  .handler(async ({ data, context }) => {
+    const { error } = await context.supabase
+      .from("profiles")
+      .update({ avatar_url: data.avatar_url })
+      .eq("id", context.userId);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
+
+export const changeMyPassword = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: unknown) =>
+    z.object({ current_password: z.string().min(1), new_password: z.string().min(8).max(72) }).parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    // Verify current password by attempting a sign-in with a fresh client
+    const { createClient } = await import("@supabase/supabase-js");
+    const email = context.claims?.email as string | undefined;
+    if (!email) throw new Error("No email on session");
+    const verifier = createClient(
+      process.env.SUPABASE_URL!,
+      process.env.SUPABASE_PUBLISHABLE_KEY!,
+      { auth: { persistSession: false, autoRefreshToken: false, storage: undefined } },
+    );
+    const { error: signErr } = await verifier.auth.signInWithPassword({
+      email,
+      password: data.current_password,
+    });
+    if (signErr) throw new Error("Current password is incorrect");
+
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { error } = await supabaseAdmin.auth.admin.updateUserById(context.userId, {
+      password: data.new_password,
+    });
+    if (error) throw new Error(error.message);
+    await context.supabase.from("activity_logs").insert({
+      user_id: context.userId,
+      action: "Changed password",
+    });
+    return { ok: true };
+  });
+
 const ProfileUpdate = z.object({
   first_name: z.string().max(80),
   middle_name: z.string().max(80).optional(),
