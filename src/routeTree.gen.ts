@@ -16,6 +16,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiTalaChatRouteImport } from './routes/api/tala-chat'
+import { Route as AuthenticatedWorksheetRouteImport } from './routes/_authenticated/worksheet'
 import { Route as AuthenticatedTosRouteImport } from './routes/_authenticated/tos'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedLessonPlansRouteImport } from './routes/_authenticated/lesson-plans'
@@ -64,6 +65,11 @@ const ApiTalaChatRoute = ApiTalaChatRouteImport.update({
   id: '/api/tala-chat',
   path: '/api/tala-chat',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedWorksheetRoute = AuthenticatedWorksheetRouteImport.update({
+  id: '/worksheet',
+  path: '/worksheet',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedTosRoute = AuthenticatedTosRouteImport.update({
   id: '/tos',
@@ -155,6 +161,7 @@ export interface FileRoutesByFullPath {
   '/lesson-plans': typeof AuthenticatedLessonPlansRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/tos': typeof AuthenticatedTosRoute
+  '/worksheet': typeof AuthenticatedWorksheetRoute
   '/api/tala-chat': typeof ApiTalaChatRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/approvals': typeof AuthenticatedAdminApprovalsRoute
@@ -176,6 +183,7 @@ export interface FileRoutesByTo {
   '/lesson-plans': typeof AuthenticatedLessonPlansRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/tos': typeof AuthenticatedTosRoute
+  '/worksheet': typeof AuthenticatedWorksheetRoute
   '/api/tala-chat': typeof ApiTalaChatRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/approvals': typeof AuthenticatedAdminApprovalsRoute
@@ -200,6 +208,7 @@ export interface FileRoutesById {
   '/_authenticated/lesson-plans': typeof AuthenticatedLessonPlansRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/tos': typeof AuthenticatedTosRoute
+  '/_authenticated/worksheet': typeof AuthenticatedWorksheetRoute
   '/api/tala-chat': typeof ApiTalaChatRoute
   '/_authenticated/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/_authenticated/admin/approvals': typeof AuthenticatedAdminApprovalsRoute
@@ -224,6 +233,7 @@ export interface FileRouteTypes {
     | '/lesson-plans'
     | '/settings'
     | '/tos'
+    | '/worksheet'
     | '/api/tala-chat'
     | '/admin/announcements'
     | '/admin/approvals'
@@ -245,6 +255,7 @@ export interface FileRouteTypes {
     | '/lesson-plans'
     | '/settings'
     | '/tos'
+    | '/worksheet'
     | '/api/tala-chat'
     | '/admin/announcements'
     | '/admin/approvals'
@@ -268,6 +279,7 @@ export interface FileRouteTypes {
     | '/_authenticated/lesson-plans'
     | '/_authenticated/settings'
     | '/_authenticated/tos'
+    | '/_authenticated/worksheet'
     | '/api/tala-chat'
     | '/_authenticated/admin/announcements'
     | '/_authenticated/admin/approvals'
@@ -338,6 +350,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/tala-chat'
       preLoaderRoute: typeof ApiTalaChatRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/worksheet': {
+      id: '/_authenticated/worksheet'
+      path: '/worksheet'
+      fullPath: '/worksheet'
+      preLoaderRoute: typeof AuthenticatedWorksheetRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/tos': {
       id: '/_authenticated/tos'
@@ -474,6 +493,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedLessonPlansRoute: typeof AuthenticatedLessonPlansRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedTosRoute: typeof AuthenticatedTosRoute
+  AuthenticatedWorksheetRoute: typeof AuthenticatedWorksheetRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -484,6 +504,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedLessonPlansRoute: AuthenticatedLessonPlansRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedTosRoute: AuthenticatedTosRoute,
+  AuthenticatedWorksheetRoute: AuthenticatedWorksheetRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
