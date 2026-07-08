@@ -40,7 +40,6 @@ function Landing() {
           <nav className="hidden gap-6 text-sm font-medium md:flex">
             <Link to="/" className="hover:text-primary">Home</Link>
             <Link to="/about" className="hover:text-primary">About</Link>
-            <Link to="/contact" className="hover:text-primary">Contact</Link>
           </nav>
           <div className="flex items-center gap-2">
             <Link to="/auth" className="text-sm font-medium hover:text-primary">Sign in</Link>
