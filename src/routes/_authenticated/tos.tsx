@@ -9,7 +9,7 @@ export const Route = createFileRoute("/_authenticated/tos")({
     <EmbedFrame
       title="Automated TOS with Test Generator"
       subtitle="Generate curriculum-aligned TOS and tests within TALA."
-      src="https://jzctos.lovable.app/"
+      src="https://jzctosgen.lovable.app/"
     />
   ),
 });
