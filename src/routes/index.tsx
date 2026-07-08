@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { getSiteContent } from "@/lib/public.functions";
-import { BookOpen, ArrowRight, FileText, Table, ClipboardCheck, Sparkles } from "lucide-react";
+import { BookOpen, ArrowRight, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
