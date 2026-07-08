@@ -77,7 +77,7 @@ function AssessmentPage() {
   const mut = useMutation({
     mutationFn: (d: typeof form) => fn({ data: d }),
     onSuccess: (row) => {
-      setResult({ title: row.title, items: row.items as AssessmentContent["items"] });
+      setResult({ title: row.title, items: row.items as unknown as AssessmentContent["items"] });
       qc.invalidateQueries({ queryKey: ["my-activity"] });
       qc.invalidateQueries({ queryKey: ["my-docs"] });
       toast.success("Assessment generated!");
