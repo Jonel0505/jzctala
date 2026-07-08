@@ -17,6 +17,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiTalaChatRouteImport } from './routes/api/tala-chat'
 import { Route as AuthenticatedWorksheetRouteImport } from './routes/_authenticated/worksheet'
+import { Route as AuthenticatedTranslatorRouteImport } from './routes/_authenticated/translator'
 import { Route as AuthenticatedTosRouteImport } from './routes/_authenticated/tos'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedRubricRouteImport } from './routes/_authenticated/rubric'
@@ -72,6 +73,11 @@ const ApiTalaChatRoute = ApiTalaChatRouteImport.update({
 const AuthenticatedWorksheetRoute = AuthenticatedWorksheetRouteImport.update({
   id: '/worksheet',
   path: '/worksheet',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTranslatorRoute = AuthenticatedTranslatorRouteImport.update({
+  id: '/translator',
+  path: '/translator',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedTosRoute = AuthenticatedTosRouteImport.update({
@@ -182,6 +188,7 @@ export interface FileRoutesByFullPath {
   '/rubric': typeof AuthenticatedRubricRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/tos': typeof AuthenticatedTosRoute
+  '/translator': typeof AuthenticatedTranslatorRoute
   '/worksheet': typeof AuthenticatedWorksheetRoute
   '/api/tala-chat': typeof ApiTalaChatRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
@@ -207,6 +214,7 @@ export interface FileRoutesByTo {
   '/rubric': typeof AuthenticatedRubricRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/tos': typeof AuthenticatedTosRoute
+  '/translator': typeof AuthenticatedTranslatorRoute
   '/worksheet': typeof AuthenticatedWorksheetRoute
   '/api/tala-chat': typeof ApiTalaChatRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
@@ -235,6 +243,7 @@ export interface FileRoutesById {
   '/_authenticated/rubric': typeof AuthenticatedRubricRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/tos': typeof AuthenticatedTosRoute
+  '/_authenticated/translator': typeof AuthenticatedTranslatorRoute
   '/_authenticated/worksheet': typeof AuthenticatedWorksheetRoute
   '/api/tala-chat': typeof ApiTalaChatRoute
   '/_authenticated/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
@@ -263,6 +272,7 @@ export interface FileRouteTypes {
     | '/rubric'
     | '/settings'
     | '/tos'
+    | '/translator'
     | '/worksheet'
     | '/api/tala-chat'
     | '/admin/announcements'
@@ -288,6 +298,7 @@ export interface FileRouteTypes {
     | '/rubric'
     | '/settings'
     | '/tos'
+    | '/translator'
     | '/worksheet'
     | '/api/tala-chat'
     | '/admin/announcements'
@@ -315,6 +326,7 @@ export interface FileRouteTypes {
     | '/_authenticated/rubric'
     | '/_authenticated/settings'
     | '/_authenticated/tos'
+    | '/_authenticated/translator'
     | '/_authenticated/worksheet'
     | '/api/tala-chat'
     | '/_authenticated/admin/announcements'
@@ -392,6 +404,13 @@ declare module '@tanstack/react-router' {
       path: '/worksheet'
       fullPath: '/worksheet'
       preLoaderRoute: typeof AuthenticatedWorksheetRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/translator': {
+      id: '/_authenticated/translator'
+      path: '/translator'
+      fullPath: '/translator'
+      preLoaderRoute: typeof AuthenticatedTranslatorRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/tos': {
@@ -553,6 +572,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedRubricRoute: typeof AuthenticatedRubricRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedTosRoute: typeof AuthenticatedTosRoute
+  AuthenticatedTranslatorRoute: typeof AuthenticatedTranslatorRoute
   AuthenticatedWorksheetRoute: typeof AuthenticatedWorksheetRoute
 }
 
@@ -567,6 +587,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedRubricRoute: AuthenticatedRubricRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedTosRoute: AuthenticatedTosRoute,
+  AuthenticatedTranslatorRoute: AuthenticatedTranslatorRoute,
   AuthenticatedWorksheetRoute: AuthenticatedWorksheetRoute,
 }
 
