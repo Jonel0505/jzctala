@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiTalaChatRouteImport } from './routes/api/tala-chat'
 import { Route as AuthenticatedTosRouteImport } from './routes/_authenticated/tos'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedLessonPlansRouteImport } from './routes/_authenticated/lesson-plans'
@@ -57,6 +58,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiTalaChatRoute = ApiTalaChatRouteImport.update({
+  id: '/api/tala-chat',
+  path: '/api/tala-chat',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedTosRoute = AuthenticatedTosRouteImport.update({
@@ -149,6 +155,7 @@ export interface FileRoutesByFullPath {
   '/lesson-plans': typeof AuthenticatedLessonPlansRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/tos': typeof AuthenticatedTosRoute
+  '/api/tala-chat': typeof ApiTalaChatRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/approvals': typeof AuthenticatedAdminApprovalsRoute
   '/admin/content': typeof AuthenticatedAdminContentRoute
@@ -169,6 +176,7 @@ export interface FileRoutesByTo {
   '/lesson-plans': typeof AuthenticatedLessonPlansRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/tos': typeof AuthenticatedTosRoute
+  '/api/tala-chat': typeof ApiTalaChatRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/approvals': typeof AuthenticatedAdminApprovalsRoute
   '/admin/content': typeof AuthenticatedAdminContentRoute
@@ -192,6 +200,7 @@ export interface FileRoutesById {
   '/_authenticated/lesson-plans': typeof AuthenticatedLessonPlansRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/tos': typeof AuthenticatedTosRoute
+  '/api/tala-chat': typeof ApiTalaChatRoute
   '/_authenticated/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/_authenticated/admin/approvals': typeof AuthenticatedAdminApprovalsRoute
   '/_authenticated/admin/content': typeof AuthenticatedAdminContentRoute
@@ -215,6 +224,7 @@ export interface FileRouteTypes {
     | '/lesson-plans'
     | '/settings'
     | '/tos'
+    | '/api/tala-chat'
     | '/admin/announcements'
     | '/admin/approvals'
     | '/admin/content'
@@ -235,6 +245,7 @@ export interface FileRouteTypes {
     | '/lesson-plans'
     | '/settings'
     | '/tos'
+    | '/api/tala-chat'
     | '/admin/announcements'
     | '/admin/approvals'
     | '/admin/content'
@@ -257,6 +268,7 @@ export interface FileRouteTypes {
     | '/_authenticated/lesson-plans'
     | '/_authenticated/settings'
     | '/_authenticated/tos'
+    | '/api/tala-chat'
     | '/_authenticated/admin/announcements'
     | '/_authenticated/admin/approvals'
     | '/_authenticated/admin/content'
@@ -273,6 +285,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ApiTalaChatRoute: typeof ApiTalaChatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -317,6 +330,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/tala-chat': {
+      id: '/api/tala-chat'
+      path: '/api/tala-chat'
+      fullPath: '/api/tala-chat'
+      preLoaderRoute: typeof ApiTalaChatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/tos': {
@@ -476,6 +496,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ApiTalaChatRoute: ApiTalaChatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
