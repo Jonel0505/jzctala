@@ -20,6 +20,7 @@ import { Route as AuthenticatedWorksheetRouteImport } from './routes/_authentica
 import { Route as AuthenticatedTosRouteImport } from './routes/_authenticated/tos'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedRubricRouteImport } from './routes/_authenticated/rubric'
+import { Route as AuthenticatedRewriterRouteImport } from './routes/_authenticated/rewriter'
 import { Route as AuthenticatedPptRouteImport } from './routes/_authenticated/ppt'
 import { Route as AuthenticatedLessonPlansRouteImport } from './routes/_authenticated/lesson-plans'
 import { Route as AuthenticatedDocumentsRouteImport } from './routes/_authenticated/documents'
@@ -86,6 +87,11 @@ const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
 const AuthenticatedRubricRoute = AuthenticatedRubricRouteImport.update({
   id: '/rubric',
   path: '/rubric',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedRewriterRoute = AuthenticatedRewriterRouteImport.update({
+  id: '/rewriter',
+  path: '/rewriter',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedPptRoute = AuthenticatedPptRouteImport.update({
@@ -172,6 +178,7 @@ export interface FileRoutesByFullPath {
   '/documents': typeof AuthenticatedDocumentsRoute
   '/lesson-plans': typeof AuthenticatedLessonPlansRoute
   '/ppt': typeof AuthenticatedPptRoute
+  '/rewriter': typeof AuthenticatedRewriterRoute
   '/rubric': typeof AuthenticatedRubricRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/tos': typeof AuthenticatedTosRoute
@@ -196,6 +203,7 @@ export interface FileRoutesByTo {
   '/documents': typeof AuthenticatedDocumentsRoute
   '/lesson-plans': typeof AuthenticatedLessonPlansRoute
   '/ppt': typeof AuthenticatedPptRoute
+  '/rewriter': typeof AuthenticatedRewriterRoute
   '/rubric': typeof AuthenticatedRubricRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/tos': typeof AuthenticatedTosRoute
@@ -223,6 +231,7 @@ export interface FileRoutesById {
   '/_authenticated/documents': typeof AuthenticatedDocumentsRoute
   '/_authenticated/lesson-plans': typeof AuthenticatedLessonPlansRoute
   '/_authenticated/ppt': typeof AuthenticatedPptRoute
+  '/_authenticated/rewriter': typeof AuthenticatedRewriterRoute
   '/_authenticated/rubric': typeof AuthenticatedRubricRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/tos': typeof AuthenticatedTosRoute
@@ -250,6 +259,7 @@ export interface FileRouteTypes {
     | '/documents'
     | '/lesson-plans'
     | '/ppt'
+    | '/rewriter'
     | '/rubric'
     | '/settings'
     | '/tos'
@@ -274,6 +284,7 @@ export interface FileRouteTypes {
     | '/documents'
     | '/lesson-plans'
     | '/ppt'
+    | '/rewriter'
     | '/rubric'
     | '/settings'
     | '/tos'
@@ -300,6 +311,7 @@ export interface FileRouteTypes {
     | '/_authenticated/documents'
     | '/_authenticated/lesson-plans'
     | '/_authenticated/ppt'
+    | '/_authenticated/rewriter'
     | '/_authenticated/rubric'
     | '/_authenticated/settings'
     | '/_authenticated/tos'
@@ -401,6 +413,13 @@ declare module '@tanstack/react-router' {
       path: '/rubric'
       fullPath: '/rubric'
       preLoaderRoute: typeof AuthenticatedRubricRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/rewriter': {
+      id: '/_authenticated/rewriter'
+      path: '/rewriter'
+      fullPath: '/rewriter'
+      preLoaderRoute: typeof AuthenticatedRewriterRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/ppt': {
@@ -530,6 +549,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDocumentsRoute: typeof AuthenticatedDocumentsRoute
   AuthenticatedLessonPlansRoute: typeof AuthenticatedLessonPlansRoute
   AuthenticatedPptRoute: typeof AuthenticatedPptRoute
+  AuthenticatedRewriterRoute: typeof AuthenticatedRewriterRoute
   AuthenticatedRubricRoute: typeof AuthenticatedRubricRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedTosRoute: typeof AuthenticatedTosRoute
@@ -543,6 +563,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDocumentsRoute: AuthenticatedDocumentsRoute,
   AuthenticatedLessonPlansRoute: AuthenticatedLessonPlansRoute,
   AuthenticatedPptRoute: AuthenticatedPptRoute,
+  AuthenticatedRewriterRoute: AuthenticatedRewriterRoute,
   AuthenticatedRubricRoute: AuthenticatedRubricRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedTosRoute: AuthenticatedTosRoute,
