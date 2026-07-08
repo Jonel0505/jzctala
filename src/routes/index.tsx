@@ -117,27 +117,8 @@ function Landing() {
         </div>
       </section>
 
-      {/* Feature cards */}
-      <section className="mx-auto max-w-6xl px-4 pb-20">
-        <div className="grid gap-5 md:grid-cols-3">
-          {[
-            { icon: Table, title: "Automated TOS Portal", desc: "Generate curriculum-aligned Tables of Specification instantly.", color: "success" },
-            { icon: FileText, title: "Lesson Plan Generator", desc: "Create ILAW-formatted lesson plans quickly and efficiently.", color: "primary" },
-            { icon: ClipboardCheck, title: "Assessment Generator", desc: "Fair, standards-aligned assessments in seconds.", color: "warning" },
-          ].map((f) => {
-            const Icon = f.icon;
-            return (
-              <div key={f.title} className="group rounded-2xl border bg-card p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                <div className={`mb-4 grid h-12 w-12 place-items-center rounded-xl bg-${f.color}/15 text-${f.color}`}>
-                  <Icon className="h-6 w-6" />
-                </div>
-                <h3 className="mb-1 text-lg font-bold">{f.title}</h3>
-                <p className="text-sm text-muted-foreground">{f.desc}</p>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+
+
 
       {/* Mission / Vision */}
       <section className="border-y bg-muted/30 py-16">
