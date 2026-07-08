@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { getSiteContent } from "@/lib/public.functions";
-import { BookOpen, ArrowRight, FileText, Table, ClipboardCheck, Sparkles } from "lucide-react";
+import { BookOpen, ArrowRight, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -40,7 +40,6 @@ function Landing() {
           <nav className="hidden gap-6 text-sm font-medium md:flex">
             <Link to="/" className="hover:text-primary">Home</Link>
             <Link to="/about" className="hover:text-primary">About</Link>
-            <Link to="/contact" className="hover:text-primary">Contact</Link>
           </nav>
           <div className="flex items-center gap-2">
             <Link to="/auth" className="text-sm font-medium hover:text-primary">Sign in</Link>
@@ -118,27 +117,8 @@ function Landing() {
         </div>
       </section>
 
-      {/* Feature cards */}
-      <section className="mx-auto max-w-6xl px-4 pb-20">
-        <div className="grid gap-5 md:grid-cols-3">
-          {[
-            { icon: Table, title: "Automated TOS Portal", desc: "Generate curriculum-aligned Tables of Specification instantly.", color: "success" },
-            { icon: FileText, title: "Lesson Plan Generator", desc: "Create ILAW-formatted lesson plans quickly and efficiently.", color: "primary" },
-            { icon: ClipboardCheck, title: "Assessment Generator", desc: "Fair, standards-aligned assessments in seconds.", color: "warning" },
-          ].map((f) => {
-            const Icon = f.icon;
-            return (
-              <div key={f.title} className="group rounded-2xl border bg-card p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                <div className={`mb-4 grid h-12 w-12 place-items-center rounded-xl bg-${f.color}/15 text-${f.color}`}>
-                  <Icon className="h-6 w-6" />
-                </div>
-                <h3 className="mb-1 text-lg font-bold">{f.title}</h3>
-                <p className="text-sm text-muted-foreground">{f.desc}</p>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+
+
 
       {/* Mission / Vision */}
       <section className="border-y bg-muted/30 py-16">

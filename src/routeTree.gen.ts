@@ -15,8 +15,14 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiTalaChatRouteImport } from './routes/api/tala-chat'
+import { Route as AuthenticatedWorksheetRouteImport } from './routes/_authenticated/worksheet'
+import { Route as AuthenticatedTranslatorRouteImport } from './routes/_authenticated/translator'
 import { Route as AuthenticatedTosRouteImport } from './routes/_authenticated/tos'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedRubricRouteImport } from './routes/_authenticated/rubric'
+import { Route as AuthenticatedRewriterRouteImport } from './routes/_authenticated/rewriter'
+import { Route as AuthenticatedPptRouteImport } from './routes/_authenticated/ppt'
 import { Route as AuthenticatedLessonPlansRouteImport } from './routes/_authenticated/lesson-plans'
 import { Route as AuthenticatedDocumentsRouteImport } from './routes/_authenticated/documents'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
@@ -59,6 +65,21 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiTalaChatRoute = ApiTalaChatRouteImport.update({
+  id: '/api/tala-chat',
+  path: '/api/tala-chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedWorksheetRoute = AuthenticatedWorksheetRouteImport.update({
+  id: '/worksheet',
+  path: '/worksheet',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTranslatorRoute = AuthenticatedTranslatorRouteImport.update({
+  id: '/translator',
+  path: '/translator',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedTosRoute = AuthenticatedTosRouteImport.update({
   id: '/tos',
   path: '/tos',
@@ -67,6 +88,21 @@ const AuthenticatedTosRoute = AuthenticatedTosRouteImport.update({
 const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedRubricRoute = AuthenticatedRubricRouteImport.update({
+  id: '/rubric',
+  path: '/rubric',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedRewriterRoute = AuthenticatedRewriterRouteImport.update({
+  id: '/rewriter',
+  path: '/rewriter',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPptRoute = AuthenticatedPptRouteImport.update({
+  id: '/ppt',
+  path: '/ppt',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedLessonPlansRoute =
@@ -147,8 +183,14 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/documents': typeof AuthenticatedDocumentsRoute
   '/lesson-plans': typeof AuthenticatedLessonPlansRoute
+  '/ppt': typeof AuthenticatedPptRoute
+  '/rewriter': typeof AuthenticatedRewriterRoute
+  '/rubric': typeof AuthenticatedRubricRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/tos': typeof AuthenticatedTosRoute
+  '/translator': typeof AuthenticatedTranslatorRoute
+  '/worksheet': typeof AuthenticatedWorksheetRoute
+  '/api/tala-chat': typeof ApiTalaChatRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/approvals': typeof AuthenticatedAdminApprovalsRoute
   '/admin/content': typeof AuthenticatedAdminContentRoute
@@ -167,8 +209,14 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/documents': typeof AuthenticatedDocumentsRoute
   '/lesson-plans': typeof AuthenticatedLessonPlansRoute
+  '/ppt': typeof AuthenticatedPptRoute
+  '/rewriter': typeof AuthenticatedRewriterRoute
+  '/rubric': typeof AuthenticatedRubricRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/tos': typeof AuthenticatedTosRoute
+  '/translator': typeof AuthenticatedTranslatorRoute
+  '/worksheet': typeof AuthenticatedWorksheetRoute
+  '/api/tala-chat': typeof ApiTalaChatRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/approvals': typeof AuthenticatedAdminApprovalsRoute
   '/admin/content': typeof AuthenticatedAdminContentRoute
@@ -190,8 +238,14 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/documents': typeof AuthenticatedDocumentsRoute
   '/_authenticated/lesson-plans': typeof AuthenticatedLessonPlansRoute
+  '/_authenticated/ppt': typeof AuthenticatedPptRoute
+  '/_authenticated/rewriter': typeof AuthenticatedRewriterRoute
+  '/_authenticated/rubric': typeof AuthenticatedRubricRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/tos': typeof AuthenticatedTosRoute
+  '/_authenticated/translator': typeof AuthenticatedTranslatorRoute
+  '/_authenticated/worksheet': typeof AuthenticatedWorksheetRoute
+  '/api/tala-chat': typeof ApiTalaChatRoute
   '/_authenticated/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/_authenticated/admin/approvals': typeof AuthenticatedAdminApprovalsRoute
   '/_authenticated/admin/content': typeof AuthenticatedAdminContentRoute
@@ -213,8 +267,14 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/documents'
     | '/lesson-plans'
+    | '/ppt'
+    | '/rewriter'
+    | '/rubric'
     | '/settings'
     | '/tos'
+    | '/translator'
+    | '/worksheet'
+    | '/api/tala-chat'
     | '/admin/announcements'
     | '/admin/approvals'
     | '/admin/content'
@@ -233,8 +293,14 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/documents'
     | '/lesson-plans'
+    | '/ppt'
+    | '/rewriter'
+    | '/rubric'
     | '/settings'
     | '/tos'
+    | '/translator'
+    | '/worksheet'
+    | '/api/tala-chat'
     | '/admin/announcements'
     | '/admin/approvals'
     | '/admin/content'
@@ -255,8 +321,14 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/_authenticated/documents'
     | '/_authenticated/lesson-plans'
+    | '/_authenticated/ppt'
+    | '/_authenticated/rewriter'
+    | '/_authenticated/rubric'
     | '/_authenticated/settings'
     | '/_authenticated/tos'
+    | '/_authenticated/translator'
+    | '/_authenticated/worksheet'
+    | '/api/tala-chat'
     | '/_authenticated/admin/announcements'
     | '/_authenticated/admin/approvals'
     | '/_authenticated/admin/content'
@@ -273,6 +345,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ApiTalaChatRoute: typeof ApiTalaChatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -319,6 +392,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/tala-chat': {
+      id: '/api/tala-chat'
+      path: '/api/tala-chat'
+      fullPath: '/api/tala-chat'
+      preLoaderRoute: typeof ApiTalaChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/worksheet': {
+      id: '/_authenticated/worksheet'
+      path: '/worksheet'
+      fullPath: '/worksheet'
+      preLoaderRoute: typeof AuthenticatedWorksheetRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/translator': {
+      id: '/_authenticated/translator'
+      path: '/translator'
+      fullPath: '/translator'
+      preLoaderRoute: typeof AuthenticatedTranslatorRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/tos': {
       id: '/_authenticated/tos'
       path: '/tos'
@@ -331,6 +425,27 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/rubric': {
+      id: '/_authenticated/rubric'
+      path: '/rubric'
+      fullPath: '/rubric'
+      preLoaderRoute: typeof AuthenticatedRubricRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/rewriter': {
+      id: '/_authenticated/rewriter'
+      path: '/rewriter'
+      fullPath: '/rewriter'
+      preLoaderRoute: typeof AuthenticatedRewriterRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ppt': {
+      id: '/_authenticated/ppt'
+      path: '/ppt'
+      fullPath: '/ppt'
+      preLoaderRoute: typeof AuthenticatedPptRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/lesson-plans': {
@@ -452,8 +567,13 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDocumentsRoute: typeof AuthenticatedDocumentsRoute
   AuthenticatedLessonPlansRoute: typeof AuthenticatedLessonPlansRoute
+  AuthenticatedPptRoute: typeof AuthenticatedPptRoute
+  AuthenticatedRewriterRoute: typeof AuthenticatedRewriterRoute
+  AuthenticatedRubricRoute: typeof AuthenticatedRubricRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedTosRoute: typeof AuthenticatedTosRoute
+  AuthenticatedTranslatorRoute: typeof AuthenticatedTranslatorRoute
+  AuthenticatedWorksheetRoute: typeof AuthenticatedWorksheetRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -462,8 +582,13 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDocumentsRoute: AuthenticatedDocumentsRoute,
   AuthenticatedLessonPlansRoute: AuthenticatedLessonPlansRoute,
+  AuthenticatedPptRoute: AuthenticatedPptRoute,
+  AuthenticatedRewriterRoute: AuthenticatedRewriterRoute,
+  AuthenticatedRubricRoute: AuthenticatedRubricRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedTosRoute: AuthenticatedTosRoute,
+  AuthenticatedTranslatorRoute: AuthenticatedTranslatorRoute,
+  AuthenticatedWorksheetRoute: AuthenticatedWorksheetRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -476,6 +601,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ApiTalaChatRoute: ApiTalaChatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
