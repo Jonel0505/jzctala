@@ -19,6 +19,7 @@ import { Route as ApiTalaChatRouteImport } from './routes/api/tala-chat'
 import { Route as AuthenticatedWorksheetRouteImport } from './routes/_authenticated/worksheet'
 import { Route as AuthenticatedTosRouteImport } from './routes/_authenticated/tos'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedRubricRouteImport } from './routes/_authenticated/rubric'
 import { Route as AuthenticatedPptRouteImport } from './routes/_authenticated/ppt'
 import { Route as AuthenticatedLessonPlansRouteImport } from './routes/_authenticated/lesson-plans'
 import { Route as AuthenticatedDocumentsRouteImport } from './routes/_authenticated/documents'
@@ -80,6 +81,11 @@ const AuthenticatedTosRoute = AuthenticatedTosRouteImport.update({
 const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedRubricRoute = AuthenticatedRubricRouteImport.update({
+  id: '/rubric',
+  path: '/rubric',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedPptRoute = AuthenticatedPptRouteImport.update({
@@ -166,6 +172,7 @@ export interface FileRoutesByFullPath {
   '/documents': typeof AuthenticatedDocumentsRoute
   '/lesson-plans': typeof AuthenticatedLessonPlansRoute
   '/ppt': typeof AuthenticatedPptRoute
+  '/rubric': typeof AuthenticatedRubricRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/tos': typeof AuthenticatedTosRoute
   '/worksheet': typeof AuthenticatedWorksheetRoute
@@ -189,6 +196,7 @@ export interface FileRoutesByTo {
   '/documents': typeof AuthenticatedDocumentsRoute
   '/lesson-plans': typeof AuthenticatedLessonPlansRoute
   '/ppt': typeof AuthenticatedPptRoute
+  '/rubric': typeof AuthenticatedRubricRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/tos': typeof AuthenticatedTosRoute
   '/worksheet': typeof AuthenticatedWorksheetRoute
@@ -215,6 +223,7 @@ export interface FileRoutesById {
   '/_authenticated/documents': typeof AuthenticatedDocumentsRoute
   '/_authenticated/lesson-plans': typeof AuthenticatedLessonPlansRoute
   '/_authenticated/ppt': typeof AuthenticatedPptRoute
+  '/_authenticated/rubric': typeof AuthenticatedRubricRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/tos': typeof AuthenticatedTosRoute
   '/_authenticated/worksheet': typeof AuthenticatedWorksheetRoute
@@ -241,6 +250,7 @@ export interface FileRouteTypes {
     | '/documents'
     | '/lesson-plans'
     | '/ppt'
+    | '/rubric'
     | '/settings'
     | '/tos'
     | '/worksheet'
@@ -264,6 +274,7 @@ export interface FileRouteTypes {
     | '/documents'
     | '/lesson-plans'
     | '/ppt'
+    | '/rubric'
     | '/settings'
     | '/tos'
     | '/worksheet'
@@ -289,6 +300,7 @@ export interface FileRouteTypes {
     | '/_authenticated/documents'
     | '/_authenticated/lesson-plans'
     | '/_authenticated/ppt'
+    | '/_authenticated/rubric'
     | '/_authenticated/settings'
     | '/_authenticated/tos'
     | '/_authenticated/worksheet'
@@ -382,6 +394,13 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/rubric': {
+      id: '/_authenticated/rubric'
+      path: '/rubric'
+      fullPath: '/rubric'
+      preLoaderRoute: typeof AuthenticatedRubricRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/ppt': {
@@ -511,6 +530,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDocumentsRoute: typeof AuthenticatedDocumentsRoute
   AuthenticatedLessonPlansRoute: typeof AuthenticatedLessonPlansRoute
   AuthenticatedPptRoute: typeof AuthenticatedPptRoute
+  AuthenticatedRubricRoute: typeof AuthenticatedRubricRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedTosRoute: typeof AuthenticatedTosRoute
   AuthenticatedWorksheetRoute: typeof AuthenticatedWorksheetRoute
@@ -523,6 +543,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDocumentsRoute: AuthenticatedDocumentsRoute,
   AuthenticatedLessonPlansRoute: AuthenticatedLessonPlansRoute,
   AuthenticatedPptRoute: AuthenticatedPptRoute,
+  AuthenticatedRubricRoute: AuthenticatedRubricRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedTosRoute: AuthenticatedTosRoute,
   AuthenticatedWorksheetRoute: AuthenticatedWorksheetRoute,
