@@ -230,6 +230,33 @@ export type Database = {
         }
         Relationships: []
       }
+      user_devices: {
+        Row: {
+          device_id: string
+          first_seen: string
+          id: string
+          last_seen: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          device_id: string
+          first_seen?: string
+          id?: string
+          last_seen?: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          device_id?: string
+          first_seen?: string
+          id?: string
+          last_seen?: string
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
