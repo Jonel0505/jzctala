@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { AdminShell } from "@/components/tala/AdminShell";
-import { listAllUsers, setUserStatus, deleteUser, promoteAdmin } from "@/lib/admin.functions";
+import { listAllUsers, setUserStatus, deleteUser, promoteAdmin, removeUserDevice } from "@/lib/admin.functions";
 import { Search, ShieldCheck, Ban, Trash2, RotateCcw, Check } from "lucide-react";
 import { toast } from "sonner";
 
@@ -17,6 +17,7 @@ function UsersPage() {
   const setSt = useServerFn(setUserStatus);
   const del = useServerFn(deleteUser);
   const promote = useServerFn(promoteAdmin);
+  const rmDevice = useServerFn(removeUserDevice);
   const qc = useQueryClient();
   const [q, setQ] = useState("");
   const { data } = useQuery({ queryKey: ["all-users"], queryFn: () => list() });
@@ -29,6 +30,7 @@ function UsersPage() {
   const setMut = useMutation({ mutationFn: (v: any) => setSt({ data: v }), onSuccess: () => { inv(); toast.success("Updated."); }, onError: (e: Error) => toast.error(e.message) });
   const delMut = useMutation({ mutationFn: (id: string) => del({ data: { user_id: id } }), onSuccess: () => { inv(); toast.success("Deleted."); }, onError: (e: Error) => toast.error(e.message) });
   const promMut = useMutation({ mutationFn: (id: string) => promote({ data: { user_id: id } }), onSuccess: () => toast.success("Promoted to admin."), onError: (e: Error) => toast.error(e.message) });
+  const rmDevMut = useMutation({ mutationFn: (rowId: string) => rmDevice({ data: { device_row_id: rowId } }), onSuccess: () => { inv(); toast.success("Device removed."); }, onError: (e: Error) => toast.error(e.message) });
 
   return (
     <AdminShell title="User Management">
@@ -48,16 +50,34 @@ function UsersPage() {
                 <th className="px-4 py-3 text-left">Name</th>
                 <th className="px-4 py-3 text-left">School</th>
                 <th className="px-4 py-3 text-left">Email</th>
+                <th className="px-4 py-3 text-left">Devices (1st / 2nd)</th>
                 <th className="px-4 py-3 text-left">Status</th>
                 <th className="px-4 py-3 text-right">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {filtered.map((u) => (
-                <tr key={u.id} className="border-t">
+              {filtered.map((u: any) => (
+                <tr key={u.id} className="border-t align-top">
                   <td className="px-4 py-3 font-medium">{u.first_name} {u.last_name}</td>
                   <td className="px-4 py-3 text-muted-foreground">{u.school}</td>
                   <td className="px-4 py-3 text-muted-foreground">{u.email}</td>
+                  <td className="px-4 py-3 text-xs">
+                    {(u.devices ?? []).length === 0 && <span className="text-muted-foreground">No devices yet</span>}
+                    <ul className="space-y-1">
+                      {(u.devices ?? []).slice(0, 2).map((d: any, i: number) => (
+                        <li key={d.id} className="flex items-start gap-2">
+                          <span className="mt-0.5 inline-block rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-bold text-primary">#{i + 1}</span>
+                          <div className="min-w-0 flex-1">
+                            <div className="truncate font-mono text-[10px] text-muted-foreground" title={d.device_id}>{d.device_id.slice(0, 12)}…</div>
+                            <div className="truncate" title={d.user_agent ?? ""}>{shortUA(d.user_agent)}</div>
+                            <div className="text-[10px] text-muted-foreground">First: {new Date(d.first_seen).toLocaleString()}</div>
+                            <div className="text-[10px] text-muted-foreground">Last: {new Date(d.last_seen).toLocaleString()}</div>
+                          </div>
+                          <button title="Remove device" onClick={() => { if (confirm("Remove this device? User will be able to log in from a new device.")) rmDevMut.mutate(d.id); }} className="text-destructive hover:underline text-[10px]">Remove</button>
+                        </li>
+                      ))}
+                    </ul>
+                  </td>
                   <td className="px-4 py-3"><StatusBadge s={u.status} /></td>
                   <td className="px-4 py-3">
                     <div className="flex justify-end gap-1.5">
@@ -80,7 +100,7 @@ function UsersPage() {
                 </tr>
               ))}
               {filtered.length === 0 && (
-                <tr><td colSpan={5} className="px-4 py-8 text-center text-muted-foreground">No users found.</td></tr>
+                <tr><td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">No users found.</td></tr>
               )}
             </tbody>
           </table>
@@ -103,4 +123,23 @@ function IconBtn({ children, onClick, title, danger }: any) {
   return (
     <button title={title} onClick={onClick} className={`rounded-md border p-1.5 hover:bg-muted ${danger ? "text-destructive hover:bg-destructive/10" : ""}`}>{children}</button>
   );
+}
+
+function shortUA(ua: string | null | undefined): string {
+  if (!ua) return "Unknown device";
+  const s = ua;
+  let os = "Unknown OS";
+  if (/Windows NT 10/i.test(s)) os = "Windows 10/11";
+  else if (/Windows/i.test(s)) os = "Windows";
+  else if (/Android/i.test(s)) os = "Android";
+  else if (/iPhone|iPad|iOS/i.test(s)) os = "iOS";
+  else if (/Mac OS X/i.test(s)) os = "macOS";
+  else if (/Linux/i.test(s)) os = "Linux";
+  let br = "Browser";
+  if (/Edg\//i.test(s)) br = "Edge";
+  else if (/OPR\//i.test(s)) br = "Opera";
+  else if (/Chrome\//i.test(s)) br = "Chrome";
+  else if (/Firefox\//i.test(s)) br = "Firefox";
+  else if (/Safari\//i.test(s)) br = "Safari";
+  return `${br} · ${os}`;
 }

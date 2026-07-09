@@ -2,6 +2,45 @@ import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
 
+const DEVICE_LIMIT = 2;
+
+export const registerMyDevice = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: unknown) =>
+    z.object({ device_id: z.string().min(4).max(120), user_agent: z.string().max(500).optional() }).parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const sb = context.supabase as any;
+    const { data: existing, error: selErr } = await sb
+      .from("user_devices")
+      .select("id")
+      .eq("user_id", context.userId)
+      .eq("device_id", data.device_id)
+      .maybeSingle();
+    if (selErr) throw new Error(selErr.message);
+
+    if (existing) {
+      await sb.from("user_devices").update({ last_seen: new Date().toISOString(), user_agent: data.user_agent ?? null }).eq("id", existing.id);
+      return { allowed: true as const };
+    }
+
+    const { count, error: cntErr } = await sb
+      .from("user_devices")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", context.userId);
+    if (cntErr) throw new Error(cntErr.message);
+
+    if ((count ?? 0) >= DEVICE_LIMIT) {
+      return { allowed: false as const, reason: `Device limit reached (${DEVICE_LIMIT}). Ask an administrator to remove an old device.` };
+    }
+
+    const { error: insErr } = await sb
+      .from("user_devices")
+      .insert({ user_id: context.userId, device_id: data.device_id, user_agent: data.user_agent ?? null });
+    if (insErr) throw new Error(insErr.message);
+    return { allowed: true as const };
+  });
+
 export const getMyProfile = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
