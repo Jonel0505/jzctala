@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { AdminShell } from "@/components/tala/AdminShell";
-import { listAllUsers, setUserStatus, deleteUser, promoteAdmin } from "@/lib/admin.functions";
+import { listAllUsers, setUserStatus, deleteUser, promoteAdmin, removeUserDevice } from "@/lib/admin.functions";
 import { Search, ShieldCheck, Ban, Trash2, RotateCcw, Check } from "lucide-react";
 import { toast } from "sonner";
 
@@ -17,6 +17,7 @@ function UsersPage() {
   const setSt = useServerFn(setUserStatus);
   const del = useServerFn(deleteUser);
   const promote = useServerFn(promoteAdmin);
+  const rmDevice = useServerFn(removeUserDevice);
   const qc = useQueryClient();
   const [q, setQ] = useState("");
   const { data } = useQuery({ queryKey: ["all-users"], queryFn: () => list() });
@@ -29,6 +30,7 @@ function UsersPage() {
   const setMut = useMutation({ mutationFn: (v: any) => setSt({ data: v }), onSuccess: () => { inv(); toast.success("Updated."); }, onError: (e: Error) => toast.error(e.message) });
   const delMut = useMutation({ mutationFn: (id: string) => del({ data: { user_id: id } }), onSuccess: () => { inv(); toast.success("Deleted."); }, onError: (e: Error) => toast.error(e.message) });
   const promMut = useMutation({ mutationFn: (id: string) => promote({ data: { user_id: id } }), onSuccess: () => toast.success("Promoted to admin."), onError: (e: Error) => toast.error(e.message) });
+  const rmDevMut = useMutation({ mutationFn: (rowId: string) => rmDevice({ data: { device_row_id: rowId } }), onSuccess: () => { inv(); toast.success("Device removed."); }, onError: (e: Error) => toast.error(e.message) });
 
   return (
     <AdminShell title="User Management">
