@@ -23,9 +23,12 @@ import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedRubricRouteImport } from './routes/_authenticated/rubric'
 import { Route as AuthenticatedRewriterRouteImport } from './routes/_authenticated/rewriter'
 import { Route as AuthenticatedPptRouteImport } from './routes/_authenticated/ppt'
+import { Route as AuthenticatedPerformanceTaskRouteImport } from './routes/_authenticated/performance-task'
 import { Route as AuthenticatedLessonPlansRouteImport } from './routes/_authenticated/lesson-plans'
+import { Route as AuthenticatedLasRouteImport } from './routes/_authenticated/las'
 import { Route as AuthenticatedDocumentsRouteImport } from './routes/_authenticated/documents'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedClassRecordRouteImport } from './routes/_authenticated/class-record'
 import { Route as AuthenticatedAssessmentsRouteImport } from './routes/_authenticated/assessments'
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
@@ -105,12 +108,23 @@ const AuthenticatedPptRoute = AuthenticatedPptRouteImport.update({
   path: '/ppt',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedPerformanceTaskRoute =
+  AuthenticatedPerformanceTaskRouteImport.update({
+    id: '/performance-task',
+    path: '/performance-task',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedLessonPlansRoute =
   AuthenticatedLessonPlansRouteImport.update({
     id: '/lesson-plans',
     path: '/lesson-plans',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedLasRoute = AuthenticatedLasRouteImport.update({
+  id: '/las',
+  path: '/las',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDocumentsRoute = AuthenticatedDocumentsRouteImport.update({
   id: '/documents',
   path: '/documents',
@@ -121,6 +135,12 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedClassRecordRoute =
+  AuthenticatedClassRecordRouteImport.update({
+    id: '/class-record',
+    path: '/class-record',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAssessmentsRoute =
   AuthenticatedAssessmentsRouteImport.update({
     id: '/assessments',
@@ -180,9 +200,12 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/assessments': typeof AuthenticatedAssessmentsRoute
+  '/class-record': typeof AuthenticatedClassRecordRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/documents': typeof AuthenticatedDocumentsRoute
+  '/las': typeof AuthenticatedLasRoute
   '/lesson-plans': typeof AuthenticatedLessonPlansRoute
+  '/performance-task': typeof AuthenticatedPerformanceTaskRoute
   '/ppt': typeof AuthenticatedPptRoute
   '/rewriter': typeof AuthenticatedRewriterRoute
   '/rubric': typeof AuthenticatedRubricRoute
@@ -206,9 +229,12 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/reset-password': typeof ResetPasswordRoute
   '/assessments': typeof AuthenticatedAssessmentsRoute
+  '/class-record': typeof AuthenticatedClassRecordRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/documents': typeof AuthenticatedDocumentsRoute
+  '/las': typeof AuthenticatedLasRoute
   '/lesson-plans': typeof AuthenticatedLessonPlansRoute
+  '/performance-task': typeof AuthenticatedPerformanceTaskRoute
   '/ppt': typeof AuthenticatedPptRoute
   '/rewriter': typeof AuthenticatedRewriterRoute
   '/rubric': typeof AuthenticatedRubricRoute
@@ -235,9 +261,12 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/_authenticated/assessments': typeof AuthenticatedAssessmentsRoute
+  '/_authenticated/class-record': typeof AuthenticatedClassRecordRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/documents': typeof AuthenticatedDocumentsRoute
+  '/_authenticated/las': typeof AuthenticatedLasRoute
   '/_authenticated/lesson-plans': typeof AuthenticatedLessonPlansRoute
+  '/_authenticated/performance-task': typeof AuthenticatedPerformanceTaskRoute
   '/_authenticated/ppt': typeof AuthenticatedPptRoute
   '/_authenticated/rewriter': typeof AuthenticatedRewriterRoute
   '/_authenticated/rubric': typeof AuthenticatedRubricRoute
@@ -264,9 +293,12 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/admin'
     | '/assessments'
+    | '/class-record'
     | '/dashboard'
     | '/documents'
+    | '/las'
     | '/lesson-plans'
+    | '/performance-task'
     | '/ppt'
     | '/rewriter'
     | '/rubric'
@@ -290,9 +322,12 @@ export interface FileRouteTypes {
     | '/contact'
     | '/reset-password'
     | '/assessments'
+    | '/class-record'
     | '/dashboard'
     | '/documents'
+    | '/las'
     | '/lesson-plans'
+    | '/performance-task'
     | '/ppt'
     | '/rewriter'
     | '/rubric'
@@ -318,9 +353,12 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/_authenticated/admin'
     | '/_authenticated/assessments'
+    | '/_authenticated/class-record'
     | '/_authenticated/dashboard'
     | '/_authenticated/documents'
+    | '/_authenticated/las'
     | '/_authenticated/lesson-plans'
+    | '/_authenticated/performance-task'
     | '/_authenticated/ppt'
     | '/_authenticated/rewriter'
     | '/_authenticated/rubric'
@@ -448,11 +486,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPptRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/performance-task': {
+      id: '/_authenticated/performance-task'
+      path: '/performance-task'
+      fullPath: '/performance-task'
+      preLoaderRoute: typeof AuthenticatedPerformanceTaskRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/lesson-plans': {
       id: '/_authenticated/lesson-plans'
       path: '/lesson-plans'
       fullPath: '/lesson-plans'
       preLoaderRoute: typeof AuthenticatedLessonPlansRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/las': {
+      id: '/_authenticated/las'
+      path: '/las'
+      fullPath: '/las'
+      preLoaderRoute: typeof AuthenticatedLasRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/documents': {
@@ -467,6 +519,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/class-record': {
+      id: '/_authenticated/class-record'
+      path: '/class-record'
+      fullPath: '/class-record'
+      preLoaderRoute: typeof AuthenticatedClassRecordRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/assessments': {
@@ -564,9 +623,12 @@ const AuthenticatedAdminRouteRouteWithChildren =
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRouteWithChildren
   AuthenticatedAssessmentsRoute: typeof AuthenticatedAssessmentsRoute
+  AuthenticatedClassRecordRoute: typeof AuthenticatedClassRecordRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDocumentsRoute: typeof AuthenticatedDocumentsRoute
+  AuthenticatedLasRoute: typeof AuthenticatedLasRoute
   AuthenticatedLessonPlansRoute: typeof AuthenticatedLessonPlansRoute
+  AuthenticatedPerformanceTaskRoute: typeof AuthenticatedPerformanceTaskRoute
   AuthenticatedPptRoute: typeof AuthenticatedPptRoute
   AuthenticatedRewriterRoute: typeof AuthenticatedRewriterRoute
   AuthenticatedRubricRoute: typeof AuthenticatedRubricRoute
@@ -579,9 +641,12 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRouteWithChildren,
   AuthenticatedAssessmentsRoute: AuthenticatedAssessmentsRoute,
+  AuthenticatedClassRecordRoute: AuthenticatedClassRecordRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDocumentsRoute: AuthenticatedDocumentsRoute,
+  AuthenticatedLasRoute: AuthenticatedLasRoute,
   AuthenticatedLessonPlansRoute: AuthenticatedLessonPlansRoute,
+  AuthenticatedPerformanceTaskRoute: AuthenticatedPerformanceTaskRoute,
   AuthenticatedPptRoute: AuthenticatedPptRoute,
   AuthenticatedRewriterRoute: AuthenticatedRewriterRoute,
   AuthenticatedRubricRoute: AuthenticatedRubricRoute,
