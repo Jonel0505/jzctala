@@ -25,12 +25,26 @@ export const listAllUsers = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     await assertAdmin(context.supabase, context.userId);
-    const { data, error } = await context.supabase
-      .from("profiles")
-      .select("*")
-      .order("created_at", { ascending: false });
+    const [{ data: profiles, error }, { data: devices }] = await Promise.all([
+      context.supabase.from("profiles").select("*").order("created_at", { ascending: false }),
+      (context.supabase as any).from("user_devices").select("*").order("first_seen", { ascending: true }),
+    ]);
     if (error) throw new Error(error.message);
-    return data;
+    const devMap: Record<string, any[]> = {};
+    for (const d of (devices ?? []) as any[]) {
+      (devMap[d.user_id] ||= []).push(d);
+    }
+    return (profiles ?? []).map((p: any) => ({ ...p, devices: devMap[p.id] ?? [] }));
+  });
+
+export const removeUserDevice = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: unknown) => z.object({ device_row_id: z.string().uuid() }).parse(d))
+  .handler(async ({ data, context }) => {
+    await assertAdmin(context.supabase, context.userId);
+    const { error } = await (context.supabase as any).from("user_devices").delete().eq("id", data.device_row_id);
+    if (error) throw new Error(error.message);
+    return { ok: true };
   });
 
 const StatusUpdate = z.object({
