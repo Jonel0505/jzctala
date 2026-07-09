@@ -124,3 +124,22 @@ function IconBtn({ children, onClick, title, danger }: any) {
     <button title={title} onClick={onClick} className={`rounded-md border p-1.5 hover:bg-muted ${danger ? "text-destructive hover:bg-destructive/10" : ""}`}>{children}</button>
   );
 }
+
+function shortUA(ua: string | null | undefined): string {
+  if (!ua) return "Unknown device";
+  const s = ua;
+  let os = "Unknown OS";
+  if (/Windows NT 10/i.test(s)) os = "Windows 10/11";
+  else if (/Windows/i.test(s)) os = "Windows";
+  else if (/Android/i.test(s)) os = "Android";
+  else if (/iPhone|iPad|iOS/i.test(s)) os = "iOS";
+  else if (/Mac OS X/i.test(s)) os = "macOS";
+  else if (/Linux/i.test(s)) os = "Linux";
+  let br = "Browser";
+  if (/Edg\//i.test(s)) br = "Edge";
+  else if (/OPR\//i.test(s)) br = "Opera";
+  else if (/Chrome\//i.test(s)) br = "Chrome";
+  else if (/Firefox\//i.test(s)) br = "Firefox";
+  else if (/Safari\//i.test(s)) br = "Safari";
+  return `${br} · ${os}`;
+}
