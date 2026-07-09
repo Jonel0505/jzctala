@@ -38,7 +38,6 @@ import { getMyProfile } from "@/lib/user.functions";
 import { getSiteContent } from "@/lib/public.functions";
 import { initials } from "@/lib/tala-utils";
 import { AvatarImg } from "./AvatarImg";
-import { AvatarImg } from "./AvatarImg";
 import { TalaAssistant } from "./TalaAssistant";
 import { useDeviceGuard } from "@/hooks/use-device-guard";
 
