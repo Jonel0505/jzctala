@@ -17,6 +17,8 @@ import {
   LogOut,
   Shield,
   ChevronDown,
+  Clock,
+  CalendarDays,
 } from "lucide-react";
 import {
   Sidebar,
@@ -244,7 +246,8 @@ function TopBar({ title }: { title?: string }) {
           <div className="text-sm font-bold text-navy">{title}</div>
         </div>
       )}
-      <div className="ml-auto flex items-center gap-2">
+      <div className="ml-auto flex items-center gap-3">
+        <MiniClock />
         <div className="relative">
           <button
             onClick={() => setUserMenu((v) => !v)}
