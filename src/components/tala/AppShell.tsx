@@ -17,6 +17,8 @@ import {
   LogOut,
   Shield,
   ChevronDown,
+  Clock,
+  CalendarDays,
 } from "lucide-react";
 import {
   Sidebar,
@@ -244,7 +246,8 @@ function TopBar({ title }: { title?: string }) {
           <div className="text-sm font-bold text-navy">{title}</div>
         </div>
       )}
-      <div className="ml-auto flex items-center gap-2">
+      <div className="ml-auto flex items-center gap-3">
+        <MiniClock />
         <div className="relative">
           <button
             onClick={() => setUserMenu((v) => !v)}
@@ -289,5 +292,28 @@ function TopBar({ title }: { title?: string }) {
         </div>
       </div>
     </header>
+  );
+}
+
+function MiniClock() {
+  const [now, setNow] = useState(() => new Date());
+  useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(t);
+  }, []);
+  const time = now.toLocaleTimeString("en-PH", { timeZone: "Asia/Manila", hour: "2-digit", minute: "2-digit", hour12: true });
+  const date = now.toLocaleDateString("en-PH", { timeZone: "Asia/Manila", weekday: "short", month: "short", day: "numeric" });
+  return (
+    <div className="hidden items-center gap-2 rounded-full border border-white/10 bg-gradient-to-br from-navy to-[#1e2a5e] px-3 py-1.5 text-white shadow-[0_6px_16px_-6px_rgba(30,42,94,0.55)] md:inline-flex">
+      <div className="grid h-7 w-7 place-items-center rounded-full bg-gradient-to-br from-amber-400 to-amber-500 text-navy shadow-inner">
+        <Clock className="h-3.5 w-3.5" />
+      </div>
+      <div className="flex flex-col leading-tight">
+        <span className="font-mono text-[13px] font-black tabular-nums tracking-tight">{time}</span>
+        <span className="flex items-center gap-1 text-[9px] font-semibold uppercase tracking-widest text-white/70">
+          <CalendarDays className="h-2.5 w-2.5" />{date}
+        </span>
+      </div>
+    </div>
   );
 }
