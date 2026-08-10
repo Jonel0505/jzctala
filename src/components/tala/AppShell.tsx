@@ -240,26 +240,37 @@ function TopBar({ title }: { title?: string }) {
     navigate({ to: "/auth", replace: true });
   };
 
+  const firstName = me?.profile?.first_name
+    ? me.profile.first_name.charAt(0).toUpperCase() + me.profile.first_name.slice(1).toLowerCase()
+    : "Teacher";
+  const fullName = [me?.profile?.first_name, me?.profile?.last_name].filter(Boolean).join(" ") || "Teacher";
+
   return (
-    <header className="flex h-16 items-center gap-3 border-b bg-white/90 px-4 backdrop-blur md:px-6">
-      <SidebarTrigger className="text-muted-foreground" />
-      {title && (
-        <div className="hidden md:block">
-          <div className="text-sm font-bold text-navy">{title}</div>
+    <header className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 bg-gradient-to-r from-[#FDBA2D] to-[#F59E0B] px-4 py-3 text-[color:var(--navy)] shadow-sm md:px-6">
+      <SidebarTrigger className="text-navy hover:bg-black/10" />
+      <div className="min-w-0">
+        <div className="truncate text-base font-extrabold leading-tight md:text-lg">
+          Hello, {firstName}! <span className="text-white">👋</span>
         </div>
-      )}
-      <div className="ml-auto flex items-center gap-2">
+        <div className="truncate text-[11px] font-medium opacity-80 md:text-xs">
+          Welcome back. Let&apos;s make today meaningful.
+        </div>
+        <div className="sr-only">{title}</div>
+      </div>
+      <div className="flex items-center gap-3">
+        <PhtClock />
         <div className="relative">
           <button
             onClick={() => setUserMenu((v) => !v)}
-            className="flex items-center gap-1.5 rounded-full pr-2 hover:bg-muted"
+            className="flex items-center gap-2 rounded-full py-1 pl-1 pr-2 hover:bg-black/10"
           >
             <AvatarImg
               path={me?.profile?.avatar_url ?? null}
               fallback={initials(me?.profile?.first_name, me?.profile?.last_name)}
-              className="h-9 w-9 rounded-full ring-2 ring-primary/20"
+              className="h-9 w-9 shrink-0 rounded-full ring-2 ring-white/60"
             />
-            <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
+            <span className="hidden max-w-[10rem] truncate text-sm font-semibold sm:block">{fullName}</span>
+            <ChevronDown className="h-3.5 w-3.5" />
           </button>
           {userMenu && (
             <div
