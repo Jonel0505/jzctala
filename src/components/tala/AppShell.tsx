@@ -70,12 +70,13 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
   useDeviceGuard();
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full bg-[#f6f8fc]">
+      <div className="flex min-h-screen w-full bg-background">
         <TalaSidebar />
         <div className="flex flex-1 min-w-0 flex-col">
           <TopBar title={title} />
           <div className="sr-only">{title}</div>
           <main className="flex-1 min-w-0">{children}</main>
+          <TalaFooter />
         </div>
         <TalaAssistant />
       </div>
@@ -111,8 +112,10 @@ function TalaSidebar() {
           </div>
           {!collapsed && (
             <div className="min-w-0">
-              <div className="text-xl font-black leading-none tracking-tight">TALA</div>
-              <div className="mt-1 text-[10px] leading-tight text-white/60">
+              <div className="text-xl font-black leading-none tracking-tight text-white">
+                TAL<span className="text-[#FDBA2D]">A</span>
+              </div>
+              <div className="mt-1 text-[10px] leading-tight text-white">
                 Teaching Automation for
                 <br />
                 Lesson Planning &amp; Assessment
