@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { getSiteContent } from "@/lib/public.functions";
 import { BookOpen, ArrowRight, Sparkles } from "lucide-react";
+import { TalaFooter } from "@/components/tala/TalaFooter";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -143,12 +144,8 @@ function Landing() {
         <p className="mt-4 text-muted-foreground">{about.text}</p>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t bg-navy py-8 text-navy-foreground">
-        <div className="mx-auto max-w-6xl px-4 text-center text-sm">
-          {footer.text ?? "© 2025 TALA. All rights reserved."}
-        </div>
-      </footer>
+      <TalaFooter />
+      <div className="sr-only">{footer.text}</div>
     </div>
   );
 }
