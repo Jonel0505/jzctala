@@ -40,6 +40,7 @@ import { initials } from "@/lib/tala-utils";
 import { AvatarImg } from "./AvatarImg";
 import { TalaAssistant } from "./TalaAssistant";
 import { useDeviceGuard } from "@/hooks/use-device-guard";
+import { TalaFooter } from "./TalaFooter";
 
 interface NavItem {
   to: string;
