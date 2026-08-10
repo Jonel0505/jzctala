@@ -55,33 +55,36 @@ function Landing() {
       </header>
 
       {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-primary/10 via-background to-background" />
+      <section className="relative overflow-hidden bg-navy text-navy-foreground">
+        <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#FDBA2D]/20 blur-3xl" />
         <div className="mx-auto max-w-6xl px-4 py-20 md:py-28">
           <div className="grid gap-10 md:grid-cols-2 md:items-center">
             <div>
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-                <Sparkles className="h-3.5 w-3.5" /> Powered by intelligent automation
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-[#FDBA2D]">
+                <Sparkles className="h-3.5 w-3.5" /> Aligned with the MATATAG Curriculum
               </div>
-              <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-navy md:text-6xl">
-                Welcome to <span className="text-primary">TALA</span>
+              <h1 className="text-4xl font-extrabold leading-tight tracking-tight md:text-6xl">
+                Empowering Teachers.
+                <br />
+                <span className="text-[#FDBA2D]">Enriching Education.</span>
               </h1>
-              <p className="mt-3 text-lg font-semibold text-primary">
-                {hero.title ?? "Teaching Automation for Lesson Planning and Assessment"}
-              </p>
-              <p className="mt-4 max-w-lg text-base text-muted-foreground">
-                {hero.subtitle ?? "Streamline your teaching tasks with intelligent automation. Create, generate, and manage with ease."}
+              <p className="mt-5 max-w-xl text-base text-navy-foreground/85 md:text-lg">
+                {hero.subtitle ??
+                  "TALA empowers teachers to create, automate, assess, and inspire learning through intelligent educational tools aligned with the MATATAG Curriculum."}
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
                   to="/auth"
                   search={{ mode: "register" }}
-                  className="inline-flex items-center gap-2 rounded-lg bg-navy px-5 py-3 text-sm font-semibold text-navy-foreground shadow hover:bg-navy/90"
+                  className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#FDBA2D] to-[#F59E0B] px-5 py-3 text-sm font-bold text-navy shadow-lg transition hover:scale-[1.03]"
                 >
                   {hero.cta ?? "Let's Get Started"}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
-                <Link to="/about" className="rounded-lg border px-5 py-3 text-sm font-semibold hover:bg-muted">
+                <Link
+                  to="/about"
+                  className="rounded-xl border border-white/25 px-5 py-3 text-sm font-semibold hover:bg-white/10"
+                >
                   Learn more
                 </Link>
               </div>
