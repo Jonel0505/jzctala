@@ -18,7 +18,8 @@ export const Route = createFileRoute("/auth")({
       { name: "robots", content: "noindex" },
     ],
   }),
-  validateSearch: (s) => searchSchema.parse(s),
+  validateSearch: (s: { mode?: "login" | "register" | "forgot"; pending?: string }) =>
+    searchSchema.parse(s),
   component: AuthPage,
 });
 

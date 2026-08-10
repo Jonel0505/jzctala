@@ -31,7 +31,16 @@ export const registerMyDevice = createServerFn({ method: "POST" })
     if (cntErr) throw new Error(cntErr.message);
 
     if ((count ?? 0) >= DEVICE_LIMIT) {
-      return { allowed: false as const, reason: `Device limit reached (${DEVICE_LIMIT}). Ask an administrator to remove an old device.` };
+      // Administrators are exempt from the device limit
+      const { data: adminRow } = await sb
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", context.userId)
+        .eq("role", "admin")
+        .maybeSingle();
+      if (!adminRow) {
+        return { allowed: false as const, reason: `Device limit reached (${DEVICE_LIMIT}). Ask an administrator to remove an old device.` };
+      }
     }
 
     const { error: insErr } = await sb

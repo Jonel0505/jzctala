@@ -42,6 +42,7 @@ import { initials } from "@/lib/tala-utils";
 import { AvatarImg } from "./AvatarImg";
 import { TalaAssistant } from "./TalaAssistant";
 import { useDeviceGuard } from "@/hooks/use-device-guard";
+import { TalaFooter } from "./TalaFooter";
 
 interface NavItem {
   to: string;
@@ -71,12 +72,13 @@ export function AdminShell({ children, title }: { children: ReactNode; title?: s
   useDeviceGuard();
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full bg-[#f6f8fc]">
+      <div className="flex min-h-screen w-full bg-background">
         <AdminSidebar />
         <div className="flex flex-1 min-w-0 flex-col">
           <AdminTopBar title={title} />
           <div className="sr-only">{title}</div>
           <main className="flex-1 min-w-0">{children}</main>
+          <TalaFooter />
         </div>
         <TalaAssistant />
       </div>
