@@ -306,3 +306,31 @@ function TopBar({ title }: { title?: string }) {
     </header>
   );
 }
+
+function PhtClock() {
+  const [now, setNow] = useState(() => new Date());
+  useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(t);
+  }, []);
+  const time = now.toLocaleTimeString("en-PH", {
+    timeZone: "Asia/Manila",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
+  });
+  const date = now.toLocaleDateString("en-PH", {
+    timeZone: "Asia/Manila",
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+  return (
+    <div className="hidden rounded-xl bg-white/70 px-3 py-1.5 text-right leading-tight shadow-sm md:block">
+      <div className="text-sm font-bold tabular-nums">{time}</div>
+      <div className="text-[10px] font-medium opacity-70">{date} · PST</div>
+    </div>
+  );
+}
