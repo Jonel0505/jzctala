@@ -27,7 +27,7 @@ function ResetPassword() {
     if (error) return toast.error(error.message);
     toast.success("Password updated. Please log in.");
     await supabase.auth.signOut();
-    navigate({ to: "/auth" });
+    navigate({ to: "/auth", search: { mode: "login" } });
   };
 
   return (

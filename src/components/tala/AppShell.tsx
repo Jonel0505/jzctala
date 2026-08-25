@@ -229,7 +229,7 @@ function TopBar({ title }: { title?: string }) {
 
   useEffect(() => {
     if (me?.profile && me.profile.status !== "approved") {
-      supabase.auth.signOut().then(() => navigate({ to: "/auth", search: { pending: "1" } }));
+      supabase.auth.signOut().then(() => navigate({ to: "/auth", search: { mode: "login", pending: "1" } }));
     }
   }, [me, navigate]);
 
@@ -237,7 +237,7 @@ function TopBar({ title }: { title?: string }) {
     await queryClient.cancelQueries();
     queryClient.clear();
     await supabase.auth.signOut();
-    navigate({ to: "/auth", replace: true });
+    navigate({ to: "/auth", search: { mode: "login" }, replace: true });
   };
 
   const firstName = me?.profile?.first_name
