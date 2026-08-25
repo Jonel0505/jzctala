@@ -9,7 +9,7 @@ export const Route = createFileRoute("/_authenticated/lesson-plans")({
     <EmbedFrame
       title="Lesson Plan Maker (ILAW)"
       subtitle="Create ILAW-formatted lesson plans powered by the embedded generator."
-      src="https://jzcilawdlp.lovable.app/"
+      src="https://paulacangela.lovable.app/"
     />
   ),
 });
