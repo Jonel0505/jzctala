@@ -43,7 +43,7 @@ function Landing() {
             <Link to="/about" className="hover:text-primary">About</Link>
           </nav>
           <div className="flex items-center gap-2">
-            <Link to="/auth" className="text-sm font-medium hover:text-primary">Sign in</Link>
+            <Link to="/auth" search={{ mode: "login" }} className="text-sm font-medium hover:text-primary">Sign in</Link>
             <Link
               to="/auth"
               search={{ mode: "register" }}
